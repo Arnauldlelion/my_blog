@@ -10,7 +10,9 @@ class AdminController extends Controller
 {
     public function Create()
     {
-        return view('admin.admin');
+        $posts = Post::orderBy('create_at', 'desc')->paginate(5);
+        
+        return view('admin.admin', compact('posts'));
         
     }
    
@@ -27,9 +29,7 @@ class AdminController extends Controller
      $post->cover_image = $validatedData['Category'];
      $post->description = $validatedData['Post Content'];
      $post->save();
- 
-    
-          
-        return view('admin.store');
+
+        return redirect()->back()->with('success', 'Post created successfully!');
     }
 }
